@@ -6,9 +6,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface RegistrationPort {
-    Mono<Client> create(RegisterClientPortRequest vo);
+    Mono<Client> create(CreateClientPortRequest vo);
     Mono<Client> update(UpdateClientPortRequest vo);
-    Mono<Client> delete(DeleteClientPortRequest vo);
     Mono<Client> find(FindClientByIdPortRequest vo);
-    Flux<Client> find(FindClientPortRequest vo);
+    Flux<Client> find(FindClientsPortRequest vo);
 }

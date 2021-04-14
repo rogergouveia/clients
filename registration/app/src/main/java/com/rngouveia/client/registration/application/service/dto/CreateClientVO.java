@@ -1,11 +1,9 @@
-package com.rngouveia.client.registration.domain;
+package com.rngouveia.client.registration.application.service.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class Client {
-    @NotBlank
-    private String id;
+public class CreateClientVO {
     @NotBlank
     private String name;
     @NotNull
@@ -13,11 +11,7 @@ public class Client {
     @NotBlank
     private String email;
 
-    private Client(){}
-
-    public String getId() {
-        return id;
-    }
+    private CreateClientVO(){}
 
     public String getName() {
         return name;
@@ -36,34 +30,27 @@ public class Client {
     }
 
     public static class Builder {
-        private String id;
         private String name;
         private Integer age;
         private String email;
 
-        public Builder withId(String id){
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name){
+        public CreateClientVO.Builder withName(String name){
             this.name = name;
             return this;
         }
 
-        public Builder withAge(Integer age){
+        public CreateClientVO.Builder withAge(Integer age){
             this.age = age;
             return this;
         }
 
-        public Builder withEmail(String email){
+        public CreateClientVO.Builder withEmail(String email){
             this.email = email;
             return this;
         }
 
-        public Client build(){
-            Client client = new Client();
-            client.id = id;
+        public CreateClientVO build(){
+            CreateClientVO client = new CreateClientVO();
             client.name = name;
             client.age = age;
             client.email = email;

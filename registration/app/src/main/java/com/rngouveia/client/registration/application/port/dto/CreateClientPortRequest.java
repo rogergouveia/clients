@@ -1,11 +1,9 @@
-package com.rngouveia.client.registration.domain;
+package com.rngouveia.client.registration.application.port.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class Client {
-    @NotBlank
-    private String id;
+public class CreateClientPortRequest {
     @NotBlank
     private String name;
     @NotNull
@@ -13,11 +11,7 @@ public class Client {
     @NotBlank
     private String email;
 
-    private Client(){}
-
-    public String getId() {
-        return id;
-    }
+    private CreateClientPortRequest(){}
 
     public String getName() {
         return name;
@@ -36,34 +30,27 @@ public class Client {
     }
 
     public static class Builder {
-        private String id;
         private String name;
         private Integer age;
         private String email;
 
-        public Builder withId(String id){
-            this.id = id;
-            return this;
-        }
-
-        public Builder withName(String name){
+        public CreateClientPortRequest.Builder withName(String name){
             this.name = name;
             return this;
         }
 
-        public Builder withAge(Integer age){
+        public CreateClientPortRequest.Builder withAge(Integer age){
             this.age = age;
             return this;
         }
 
-        public Builder withEmail(String email){
+        public CreateClientPortRequest.Builder withEmail(String email){
             this.email = email;
             return this;
         }
 
-        public Client build(){
-            Client client = new Client();
-            client.id = id;
+        public CreateClientPortRequest build(){
+            CreateClientPortRequest client = new CreateClientPortRequest();
             client.name = name;
             client.age = age;
             client.email = email;

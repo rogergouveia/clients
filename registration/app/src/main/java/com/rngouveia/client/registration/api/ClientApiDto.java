@@ -1,31 +1,31 @@
-package com.rngouveia.client.registration.application.service.dto;
+package com.rngouveia.client.registration.api;
 
-import javax.validation.constraints.NotBlank;
-import java.util.Optional;
+import com.rngouveia.client.registration.domain.Client;
 
-public class UpdateClientVO {
-    @NotBlank
+public class ClientApiDto {
     private String id;
     private String name;
     private Integer age;
     private String email;
 
-    private UpdateClientVO(){}
+    private ClientApiDto(){
+
+    }
 
     public String getId() {
         return id;
     }
 
-    public Optional<String> getName() {
-        return Optional.ofNullable(name);
+    public String getName() {
+        return name;
     }
 
-    public Optional<Integer> getAge() {
-        return Optional.ofNullable(age);
+    public Integer getAge() {
+        return age;
     }
 
-    public Optional<String> getEmail() {
-        return Optional.ofNullable(email);
+    public String getEmail() {
+        return email;
     }
 
     public static Builder newInstance(){
@@ -38,28 +38,28 @@ public class UpdateClientVO {
         private Integer age;
         private String email;
 
-        public UpdateClientVO.Builder withId(String id){
+        public Builder withId(String id){
             this.id = id;
             return this;
         }
 
-        public UpdateClientVO.Builder withName(String name){
+        public Builder withName(String name){
             this.name = name;
             return this;
         }
 
-        public UpdateClientVO.Builder withAge(Integer age){
+        public Builder withAge(Integer age){
             this.age = age;
             return this;
         }
 
-        public UpdateClientVO.Builder withEmail(String email){
+        public Builder withEmail(String email){
             this.email = email;
             return this;
         }
 
-        public UpdateClientVO build(){
-            UpdateClientVO client = new UpdateClientVO();
+        public ClientApiDto build(){
+            ClientApiDto client = new ClientApiDto();
             client.id = id;
             client.name = name;
             client.age = age;
