@@ -1,5 +1,7 @@
 package com.rngouveia.customer.api.dto.request;
 
+import com.rngouveia.customer.domain.Customer;
+
 public class CreateCustomerApiRequest {
     private String name;
     private Integer age;
@@ -17,6 +19,10 @@ public class CreateCustomerApiRequest {
 
     public String getEmail() {
         return email;
+    }
+
+    public static Builder newInstance(){
+        return new Builder();
     }
 
     public static class Builder {

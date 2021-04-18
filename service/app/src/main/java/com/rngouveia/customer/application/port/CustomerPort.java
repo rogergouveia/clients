@@ -6,7 +6,7 @@ import com.rngouveia.customer.application.service.dto.DisableCustomerVO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface RegistrationPort {
+public interface CustomerPort {
     Mono<CustomerPortResponse> create(CreateCustomerPortRequest request);
     Mono<CustomerPortResponse> update(UpdateCustomerPortRequest request);
     Mono<CustomerPortResponse> find(FindCustomerByIdPortRequest request);

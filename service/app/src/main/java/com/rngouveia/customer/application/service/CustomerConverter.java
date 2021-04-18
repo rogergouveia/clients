@@ -11,13 +11,14 @@ import com.rngouveia.customer.infrastructure.CustomerDocument;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RegistrationConverter {
+public class CustomerConverter {
 
     public CreateCustomerPortRequest toRequest(CreateCustomerVO vo){
         return CreateCustomerPortRequest.newInstance()
                 .withName(vo.getName())
                 .withAge(vo.getAge())
                 .withEmail(vo.getEmail())
+                .withStatus(Customer.Status.ENABLED)
                 .build()
                 ;
     }
@@ -28,6 +29,7 @@ public class RegistrationConverter {
                 .withName(vo.getName().orElse(null))
                 .withAge(vo.getAge().orElse(null))
                 .withEmail(vo.getEmail().orElse(null))
+                .withStatus(null)
                 .build()
                 ;
     }
