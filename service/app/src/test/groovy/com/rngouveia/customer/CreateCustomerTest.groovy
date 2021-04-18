@@ -2,10 +2,12 @@ package com.rngouveia.customer
 
 
 import com.rngouveia.customer.api.dto.request.CreateCustomerApiRequest
+import com.rngouveia.customer.api.dto.request.FindCustomersApiRequest
 import com.rngouveia.customer.api.dto.request.UpdateCustomerApiRequest
 import com.rngouveia.customer.api.dto.response.CustomerApiResponse
 import com.rngouveia.customer.domain.Customer
 import com.rngouveia.customer.helper.CustomerInternalApiHelper
+import com.rngouveia.customer.helper.FindCustomersApiRequestFactory
 import com.rngouveia.customer.infrastructure.CustomerRepository
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -34,13 +36,12 @@ class CreateCustomerTest extends Specification implements CustomerInternalApiHel
     }
 
     def "Should create new customer"(){
-        given:"user will inform age 32"
+        given: "there are no customers on the db"
+        mongoRepository.deleteAll().block()
+
+        and:"user will inform age 32, name 'João da Silva' and email 'joaozinho@whatever.com'"
         Integer age = 32
-
-        and:"user will inform name 'João da Silva'"
         String name = "João da Silva"
-
-        and:"user will inform email 'joaozinho@whatever.com'"
         String email = "joaozinho@whatever.com"
 
         when:"user request to create customer"
@@ -51,7 +52,7 @@ class CreateCustomerTest extends Specification implements CustomerInternalApiHel
         then:"should have response status 'created'"
         response.getStatus() == HttpStatus.CREATED
 
-        and:""
+        and:"should have an id, the same data as informed, and status ENABLED"
         customerApiResponse.getId() != null && !customerApiResponse.getId().isBlank()
         customerApiResponse.getAge() == age
         customerApiResponse.getName() == name
@@ -70,22 +71,42 @@ class CreateCustomerTest extends Specification implements CustomerInternalApiHel
         then:"should have response status 'ok'"
         response.getStatus() == HttpStatus.OK
 
-        and:""
+        and:"should be the same created customer"
         response.getResponseBody() == customerApiResponse
 
     }
 
+    def "should find original customer by filter"(String nameRegex, String emailRegex, Integer ageMin, Integer ageMax, Collection<CustomerApiResponse> responseBody){
+        when: "user request to find"
+        FindCustomersApiRequest request = FindCustomersApiRequestFactory.create(nameRegex, emailRegex, ageMin, ageMax)
+        EntityExchangeResult<List<CustomerApiResponse>> response = findCustomers(request).expectBodyList(CustomerApiResponse.class).returnResult()
+
+        then:"should have response status 'ok'"
+        response.getStatus() == HttpStatus.OK
+
+        and:"should find customer based on filters"
+        response.getResponseBody() == responseBody
+
+        where:
+        nameRegex   | emailRegex   | ageMin | ageMax || responseBody
+        null        | null         | null   | null   || [customerApiResponse]
+        "silva"     | null         | null   | null   || [customerApiResponse]
+        "SILVA"     | null         | null   | null   || [customerApiResponse]
+        "Paiva"     | null         | null   | null   || []
+        null        | "joaozin"    | null   | null   || [customerApiResponse]
+        null        | null         | 30     | null   || [customerApiResponse]
+        null        | null         | 33     | null   || []
+        null        | null         | 32     | 34     || [customerApiResponse]
+        "Paiva"     | null         | 32     | 34     || []
+        null        | "paivinha"   | 32     | 34     || []
+        null        | null         | 32     | 31     || []
+    }
+
     def "should update customer"(){
-        given: "user will inform the created customer's id"
+        given: "user will inform the created customer's id, name 'Juca da Silva', email 'garototrakinas@gmail.com' and age 22"
         String id = customerApiResponse.getId()
-
-        and:"user will inform new name as 'Juca da Silva'"
         String newName = "Juca da Silva"
-
-        and:"user will inform new email as 'garototrakinas@gmail.com'"
         String newEmail = "garototrakinas@gmail.com"
-
-        and:"user will inform new age as 22"
         Integer newAge = 22
 
         when: "user requests to update customer"
@@ -97,7 +118,7 @@ class CreateCustomerTest extends Specification implements CustomerInternalApiHel
         then: "should have response status 'ok'"
         response.getStatus() == HttpStatus.OK
 
-        and:""
+        and:"should have the same id of the created customer, the same data as informed and status ENABLED"
         customerApiResponse.getId() == id
         customerApiResponse.getAge() == newAge
         customerApiResponse.getName() == newName
@@ -115,7 +136,7 @@ class CreateCustomerTest extends Specification implements CustomerInternalApiHel
         then:"should have response status 'ok'"
         response.getStatus() == HttpStatus.OK
 
-        and:""
+        and:"should be the same updated customer"
         response.getResponseBody() == customerApiResponse
     }
 
@@ -129,7 +150,7 @@ class CreateCustomerTest extends Specification implements CustomerInternalApiHel
         then: "should have response status 'ok'"
         response.getStatus() == HttpStatus.OK
 
-        and: ""
+        and: "should have the same data as the updated customer, and the status DISABLED"
         response.getResponseBody().getId() == customerApiResponse.getId()
         response.getResponseBody().getName() == customerApiResponse.getName()
         response.getResponseBody().getEmail() == customerApiResponse.getEmail()

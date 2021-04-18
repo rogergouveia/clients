@@ -13,6 +13,7 @@ trait CustomerInternalApiHelper extends WebTestClientSpringHelper{
                 .get()
                 .uri({builder ->
                     builder
+                    .path("/customers")
                     .queryParamIfPresent("nameRegex", request.getNameRegex())
                     .queryParamIfPresent("ageMin", request.getAgeMin())
                     .queryParamIfPresent("ageMax", request.getAgeMax())

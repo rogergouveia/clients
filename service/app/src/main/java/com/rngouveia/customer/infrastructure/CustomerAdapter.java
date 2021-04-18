@@ -71,16 +71,10 @@ public class CustomerAdapter implements CustomerPort {
     }
 
     private Mono<CustomerDocument> find(String id){
-        return mongoTemplate
-                .findById(id, CustomerDocument.class)
-                .map(s -> id)
+        return Mono
+                .just(id)
                 .flatMap(repository::findById)
                 ;
-
-//        return Mono
-//                .just(id)
-//                .flatMap(repository::findById)
-//                ;
     }
 
     @Override
@@ -95,11 +89,12 @@ public class CustomerAdapter implements CustomerPort {
     private Function<FindCustomersPortRequest, Query> toQuery(){
         return request -> {
             Criteria criteria = Criteria.where("").is(true);
-            request.getNameRegex().ifPresent(name -> criteria.and("name").regex(name));
-            request.getEmailRegex().ifPresent(email -> criteria.and("email").regex(email));
+            request.getNameRegex().ifPresent(name -> criteria.and("name").regex(name, "i"));
+            request.getEmailRegex().ifPresent(email -> criteria.and("email").regex(email, "i"));
 
-            request.getAgeMin().ifPresent(ageMin -> criteria.and("age").gte(ageMin));
-            request.getAgeMax().ifPresent(ageMax -> criteria.and("age").gte(ageMax));
+            Integer ageMin = request.getAgeMin().orElse(0);
+            request.getAgeMax().ifPresentOrElse(ageMax -> criteria.and("age").gte(ageMin).lte(ageMax),
+                                                () -> criteria.and("age").gte(ageMin));
 
             return new Query(criteria);
         };

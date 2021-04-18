@@ -11,9 +11,6 @@ public class FindCustomersApiRequest {
     private Integer ageMax;
     private String emailRegex;
 
-    private FindCustomersApiRequest() {
-    }
-
     public Optional<String> getNameRegex() {
         return Optional.ofNullable(nameRegex);
     }
@@ -30,43 +27,19 @@ public class FindCustomersApiRequest {
         return Optional.ofNullable(emailRegex);
     }
 
-    public static FindCustomersApiRequest.Builder newInstance(){
-        return new FindCustomersApiRequest.Builder();
+    public void setNameRegex(String nameRegex) {
+        this.nameRegex = nameRegex;
     }
 
-    public static class Builder{
-        private String nameRegex;
-        private Integer ageMin;
-        private Integer ageMax;
-        private String emailRegex;
+    public void setAgeMin(Integer ageMin) {
+        this.ageMin = ageMin;
+    }
 
-        public FindCustomersApiRequest.Builder withNameRegex(String nameRegex){
-            this.nameRegex=nameRegex;
-            return this;
-        }
+    public void setAgeMax(Integer ageMax) {
+        this.ageMax = ageMax;
+    }
 
-        public FindCustomersApiRequest.Builder withAgeMin(Integer ageMin){
-            this.ageMin=ageMin;
-            return this;
-        }
-
-        public FindCustomersApiRequest.Builder withAgeMax(Integer ageMax){
-            this.ageMax=ageMax;
-            return this;
-        }
-
-        public FindCustomersApiRequest.Builder withEmailRegex(String emailRegex){
-            this.emailRegex=emailRegex;
-            return this;
-        }
-
-        public FindCustomersApiRequest build(){
-            FindCustomersApiRequest vo = new FindCustomersApiRequest();
-            vo.nameRegex = nameRegex;
-            vo.ageMin = ageMin;
-            vo.ageMax = ageMax;
-            vo.emailRegex = emailRegex;
-            return vo;
-        }
+    public void setEmailRegex(String emailRegex) {
+        this.emailRegex = emailRegex;
     }
 }
