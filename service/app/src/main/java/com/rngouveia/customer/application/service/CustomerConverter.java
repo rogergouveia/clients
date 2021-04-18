@@ -29,6 +29,7 @@ public class CustomerConverter {
                 .withName(vo.getName().orElse(null))
                 .withAge(vo.getAge().orElse(null))
                 .withEmail(vo.getEmail().orElse(null))
+                .withStatus(null)
                 .build()
                 ;
     }

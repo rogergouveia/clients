@@ -31,7 +31,6 @@ class CreateCustomerTest extends Specification implements CustomerInternalApiHel
 
     def setup() {
         resetWebTestClient()
-        mongoRepository.deleteAll().block()
     }
 
     def "Should create new customer"(){
@@ -91,7 +90,7 @@ class CreateCustomerTest extends Specification implements CustomerInternalApiHel
 
         when: "user requests to update customer"
         UpdateCustomerApiRequest apiRequest = UpdateCustomerApiRequest.newInstance().withName(newName).withEmail(newEmail).withAge(newAge).build()
-        EntityExchangeResult<CustomerApiResponse> response = updateCustomer(customerApiResponse.getId(), apiRequest).expectBody(CustomerApiResponse.class).returnResult()
+        EntityExchangeResult<CustomerApiResponse> response = updateCustomer(id, apiRequest).expectBody(CustomerApiResponse.class).returnResult()
         customerApiResponse = response.getResponseBody()
 
 

@@ -57,6 +57,7 @@ public class CustomerAdapter implements CustomerPort {
             document.setName(request.getName().orElse(customerDocument.getName()));
             document.setEmail(request.getEmail().orElse(customerDocument.getEmail()));
             document.setAge(request.getAge().orElse(customerDocument.getAge()));
+            document.setStatus(request.getStatus().orElse(customerDocument.getStatus()));
             return document;
         };
     }

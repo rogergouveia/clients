@@ -47,7 +47,7 @@ trait CustomerInternalApiHelper extends WebTestClientSpringHelper{
 
     WebTestClient.ResponseSpec disableCustomer(String id){
         return getWebTestClient()
-                .patch()
+                .put()
                 .uri("/customers/${id}/disabled")
                 .exchange()
     }

@@ -3,6 +3,7 @@
 
 decisoes
 -não haverá delete. Explicar pq endpoint específico para desabilitar.
+-não pode update depois de desabilitado
 -é um serviço de domínio, logo não é responsável por autenticação
 -explicar por que usar validations ao invés de validações no builder
 -validações ficam na camada de negócio (não na api ou na camada de persistencia)
