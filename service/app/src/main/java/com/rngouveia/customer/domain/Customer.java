@@ -1,12 +1,17 @@
 package com.rngouveia.customer.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 public class Customer {
-    public enum Status {ENABLED, DISABLED}
+    public enum Status {
+        @JsonProperty("ENABLED") ENABLED,
+        @JsonProperty("DISABLED") DISABLED
+    }
 
     @NotBlank
     private String id;

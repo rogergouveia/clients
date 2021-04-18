@@ -2,12 +2,12 @@ package com.rngouveia.customer.api.dto.request;
 
 import java.util.Optional;
 
-public class UpdateCustomersApiRequest {
+public class UpdateCustomerApiRequest {
     private String name;
     private Integer age;
     private String email;
 
-    private UpdateCustomersApiRequest(){}
+    private UpdateCustomerApiRequest(){}
 
     public Optional<String> getName() {
         return Optional.ofNullable(name);
@@ -21,8 +21,8 @@ public class UpdateCustomersApiRequest {
         return Optional.ofNullable(email);
     }
 
-    public static UpdateCustomersApiRequest.Builder newInstance(){
-        return new UpdateCustomersApiRequest.Builder();
+    public static UpdateCustomerApiRequest.Builder newInstance(){
+        return new UpdateCustomerApiRequest.Builder();
     }
 
     public static class Builder {
@@ -30,23 +30,23 @@ public class UpdateCustomersApiRequest {
         private Integer age;
         private String email;
 
-        public UpdateCustomersApiRequest.Builder withName(String name){
+        public UpdateCustomerApiRequest.Builder withName(String name){
             this.name = name;
             return this;
         }
 
-        public UpdateCustomersApiRequest.Builder withAge(Integer age){
+        public UpdateCustomerApiRequest.Builder withAge(Integer age){
             this.age = age;
             return this;
         }
 
-        public UpdateCustomersApiRequest.Builder withEmail(String email){
+        public UpdateCustomerApiRequest.Builder withEmail(String email){
             this.email = email;
             return this;
         }
 
-        public UpdateCustomersApiRequest build(){
-            UpdateCustomersApiRequest customer = new UpdateCustomersApiRequest();
+        public UpdateCustomerApiRequest build(){
+            UpdateCustomerApiRequest customer = new UpdateCustomerApiRequest();
             customer.name = name;
             customer.age = age;
             customer.email = email;

@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-public interface RegistrationService {
+public interface CustomerService {
     Mono<Customer> create(@NotNull @Valid CreateCustomerVO vo);
     Mono<Customer> update(@NotNull @Valid UpdateCustomerVO vo);
     Mono<Customer> disable(@NotNull @Valid DisableCustomerVO vo);

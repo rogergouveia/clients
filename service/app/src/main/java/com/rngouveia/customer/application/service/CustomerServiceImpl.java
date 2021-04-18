@@ -1,6 +1,6 @@
 package com.rngouveia.customer.application.service;
 
-import com.rngouveia.customer.application.port.RegistrationPort;
+import com.rngouveia.customer.application.port.CustomerPort;
 import com.rngouveia.customer.application.service.dto.*;
 import com.rngouveia.customer.domain.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +14,20 @@ import javax.validation.constraints.NotNull;
 
 @Service
 @Validated
-public class RegistrationServiceImpl implements RegistrationService {
+public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    private RegistrationConverter converter;
+    private CustomerConverter converter;
 
     @Autowired
-    private RegistrationPort registrationPort;
+    private CustomerPort customerPort;
 
     @Override
     public Mono<Customer> create(@NotNull @Valid CreateCustomerVO vo) {
         return Mono
                 .just(vo)
                 .map(converter::toRequest)
-                .flatMap(registrationPort::create)
+                .flatMap(customerPort::create)
                 .map(converter::toDomain)
                 ;
     }
@@ -37,7 +37,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         return Mono
                 .just(vo)
                 .map(converter::toRequest)
-                .flatMap(registrationPort::update)
+                .flatMap(customerPort::update)
                 .map(converter::toDomain)
                 ;
     }
@@ -47,7 +47,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         return Mono
                 .just(vo)
                 .map(converter::toRequest)
-                .flatMap(registrationPort::update)
+                .flatMap(customerPort::update)
                 .map(converter::toDomain)
                 ;
     }
@@ -57,7 +57,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         return Mono
                 .just(vo)
                 .map(converter::toRequest)
-                .flatMap(registrationPort::find)
+                .flatMap(customerPort::find)
                 .map(converter::toDomain)
                 ;
     }
@@ -67,7 +67,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         return Mono
                 .just(vo)
                 .map(converter::toRequest)
-                .flatMapMany(registrationPort::find)
+                .flatMapMany(customerPort::find)
                 .map(converter::toDomain)
                 ;
     }

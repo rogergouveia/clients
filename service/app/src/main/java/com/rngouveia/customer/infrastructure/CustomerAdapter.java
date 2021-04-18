@@ -1,7 +1,12 @@
 package com.rngouveia.customer.infrastructure;
 
-import com.rngouveia.customer.application.port.RegistrationPort;
-import com.rngouveia.customer.application.port.dto.request.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rngouveia.customer.application.port.CustomerPort;
+import com.rngouveia.customer.application.port.dto.request.CreateCustomerPortRequest;
+import com.rngouveia.customer.application.port.dto.request.FindCustomerByIdPortRequest;
+import com.rngouveia.customer.application.port.dto.request.FindCustomersPortRequest;
+import com.rngouveia.customer.application.port.dto.request.UpdateCustomerPortRequest;
 import com.rngouveia.customer.application.port.dto.response.CustomerPortResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
@@ -14,16 +19,19 @@ import reactor.core.publisher.Mono;
 import java.util.function.Function;
 
 @Component
-public class RegistrationAdapter implements RegistrationPort {
+public class CustomerAdapter implements CustomerPort {
 
     @Autowired
-    private RegistrationRepository repository;
+    private CustomerRepository repository;
 
     @Autowired
     private CustomerDocumentConverter converter;
 
     @Autowired
     private ReactiveMongoTemplate mongoTemplate;
+
+    @Autowired
+    private ObjectMapper mapper;
 
     @Override
     public Mono<CustomerPortResponse> create(CreateCustomerPortRequest vo) {
@@ -62,10 +70,16 @@ public class RegistrationAdapter implements RegistrationPort {
     }
 
     private Mono<CustomerDocument> find(String id){
-        return Mono
-                .just(id)
+        return mongoTemplate
+                .findById(id, CustomerDocument.class)
+                .map(s -> id)
                 .flatMap(repository::findById)
                 ;
+
+//        return Mono
+//                .just(id)
+//                .flatMap(repository::findById)
+//                ;
     }
 
     @Override

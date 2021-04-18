@@ -3,7 +3,7 @@ package com.rngouveia.customer.api;
 import com.rngouveia.customer.api.dto.response.CustomerApiResponse;
 import com.rngouveia.customer.api.dto.request.CreateCustomerApiRequest;
 import com.rngouveia.customer.api.dto.request.FindCustomersApiRequest;
-import com.rngouveia.customer.api.dto.request.UpdateCustomersApiRequest;
+import com.rngouveia.customer.api.dto.request.UpdateCustomerApiRequest;
 import com.rngouveia.customer.application.service.dto.FindCustomersVO;
 import com.rngouveia.customer.application.service.dto.CreateCustomerVO;
 import com.rngouveia.customer.application.service.dto.UpdateCustomerVO;
@@ -33,7 +33,7 @@ public class CustomerConverterApi {
                 ;
     }
 
-    public UpdateCustomerVO toVO(String id, UpdateCustomersApiRequest request){
+    public UpdateCustomerVO toVO(String id, UpdateCustomerApiRequest request){
         return UpdateCustomerVO.newInstance()
                 .withId(id)
                 .withName(request.getName().orElse(null))
