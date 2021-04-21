@@ -8,10 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 public class Customer {
-    public enum Status {
-        @JsonProperty("ENABLED") ENABLED,
-        @JsonProperty("DISABLED") DISABLED
-    }
+    public enum Status {ENABLED, DISABLED}
 
     @NotBlank
     private String id;
