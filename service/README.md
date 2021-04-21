@@ -21,6 +21,7 @@ Na instância ec2 da AWS há apenas esse arquivo `docker-compose.yml`. O comando
 ### Qualidade
 
 Foram desenvolvidos testes unitários da camada de api e de negócio, assim como testes de integração para a camada de infraestrutura e de ciclo de vida do objeto de domínio.
+Foi usado o Jacoco para verificar cobertura de código. A aplicação possui 100% de cobertura.
 
 
 ### Observações
