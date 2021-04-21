@@ -9,7 +9,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
-    volumes: ~/mongo/data:/data/db
 
   mongo-express:
     image: mongo-express
@@ -20,4 +19,18 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: admin
 
+  customers:
+    image: rngouveia/customers:latest
+    depends_on:
+      - mongo
+    deploy:
+      replicas: 1
+    restart: on-failure
+    ports:
+      - 8080:8080
+    environment:
+      - MONGO_DB_NAME=maindb
+      - MONGO_HOST=mongo
+      - MONGO_USER=admin
+      - MONGO_PASSWORD=admin
    
