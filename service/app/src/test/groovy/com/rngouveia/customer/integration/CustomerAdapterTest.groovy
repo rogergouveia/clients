@@ -123,7 +123,7 @@ class CustomerAdapterTest extends Specification {
 
         then:
         response != null
-        response == expectedResponse
+        response.containsAll(expectedResponse)
 
         where:
         nameRegex | emailRegex | ageMin | ageMax || expectedResponse

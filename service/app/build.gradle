@@ -18,21 +18,16 @@ plugins {
 }
 
 group = 'rabbithole'
-version = '1.0.0'
+version = '1.0.0-SNAPSHOT'
 
 repositories {
     // Use JCenter for resolving dependencies.
     jcenter()
 }
 
-bootJar {
-    baseName = rootProject.name
-    version =  '1.0.0'
-}
-
 docker {
     dependsOn build
-    name "${project.group}/${bootJar.baseName}"
+    name "${project.group}/${rootProject.name}:${project.version}"
     files bootJar.archivePath
     buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
