@@ -22,11 +22,13 @@ import javax.validation.constraints.NotNull;
 @RestController
 @Validated
 public class CustomerController {
-    @Autowired
     private CustomerService service;
-
-    @Autowired
     private CustomerConverterApi converter;
+
+    public CustomerController(CustomerService service, CustomerConverterApi converter) {
+        this.service = service;
+        this.converter = converter;
+    }
 
     @GetMapping
     public Flux<CustomerApiResponse> find(@NotNull FindCustomersApiRequest criteria){

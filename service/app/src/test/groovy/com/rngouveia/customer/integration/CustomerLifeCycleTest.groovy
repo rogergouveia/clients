@@ -1,13 +1,13 @@
-package com.rngouveia.customer
+package com.rngouveia.customer.integration
 
-
+import com.rngouveia.customer.Application
 import com.rngouveia.customer.api.dto.request.CreateCustomerApiRequest
 import com.rngouveia.customer.api.dto.request.FindCustomersApiRequest
 import com.rngouveia.customer.api.dto.request.UpdateCustomerApiRequest
 import com.rngouveia.customer.api.dto.response.CustomerApiResponse
 import com.rngouveia.customer.domain.Customer
 import com.rngouveia.customer.helper.CustomerInternalApiHelper
-import com.rngouveia.customer.helper.FindCustomersApiRequestFactory
+import com.rngouveia.customer.helper.factory.FindCustomersApiRequestFactory
 import com.rngouveia.customer.infrastructure.CustomerRepository
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,7 +24,7 @@ import spock.lang.Stepwise
 @ExtendWith(SpringExtension.class)
 @AutoConfigureWebTestClient
 @Stepwise
-class CreateCustomerTest extends Specification implements CustomerInternalApiHelper {
+class CustomerLifeCycleTest extends Specification implements CustomerInternalApiHelper {
     @Autowired
     private CustomerRepository mongoRepository
 

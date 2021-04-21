@@ -1,5 +1,8 @@
 package com.rngouveia.customer.application.service.dto;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -60,5 +63,21 @@ public class CreateCustomerVO {
             customer.email = email;
             return customer;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CreateCustomerVO that = (CreateCustomerVO) o;
+
+        return new EqualsBuilder().append(name, that.name).append(age, that.age).append(email, that.email).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(name).append(age).append(email).toHashCode();
     }
 }

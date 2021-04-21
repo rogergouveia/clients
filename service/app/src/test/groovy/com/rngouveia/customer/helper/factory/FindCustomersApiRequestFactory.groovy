@@ -1,10 +1,10 @@
-package com.rngouveia.customer.helper
+package com.rngouveia.customer.helper.factory
 
 import com.rngouveia.customer.api.dto.request.FindCustomersApiRequest
 
 class FindCustomersApiRequestFactory {
 
-    public static FindCustomersApiRequest create(String nameRegex, String emailRegex, Integer ageMin, Integer ageMax){
+    static FindCustomersApiRequest create(String nameRegex, String emailRegex, Integer ageMin, Integer ageMax){
         FindCustomersApiRequest request = new FindCustomersApiRequest()
         request.setNameRegex(nameRegex)
         request.setEmailRegex(emailRegex)

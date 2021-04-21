@@ -1,4 +1,4 @@
-package com.rngouveia.customer
+package com.rngouveia.customer.unit
 
 import com.rngouveia.customer.application.error.ServiceException
 import com.rngouveia.customer.application.port.CustomerPort
@@ -21,7 +21,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import spock.lang.Specification
 
-class CustomerServiceImplTest extends Specification implements CustomerDocumentFactory {
+class CustomerServiceImplTest extends Specification {
     private CustomerServiceImpl customerService
     private CustomerPort customerPortMock
 
@@ -39,7 +39,7 @@ class CustomerServiceImplTest extends Specification implements CustomerDocumentF
         when: "mocked customerPort is called for creating customer"
         Customer.Status status = Customer.Status.ENABLED
         CreateCustomerPortRequest portRequest = CreateCustomerPortRequest.newInstance().withName(name).withEmail(email).withAge(age).withStatus(status).build()
-        CustomerPortResponse portResponse = createCustomerDocument("customerId", name, email, age, status)
+        CustomerPortResponse portResponse = CustomerDocumentFactory.create("customerId", name, email, age, status)
         customerPortMock.create(portRequest) >> Mono.just(portResponse)
 
         and: "customerServiceImpl is called for creating customer"
@@ -57,7 +57,7 @@ class CustomerServiceImplTest extends Specification implements CustomerDocumentF
 
     def "Should update customer"(String newName, String newEmail, Integer newAge){
         given:
-        CustomerPortResponse savedCustomer = createCustomerDocument("customerId", "anyName", "any@email.com", 1001, Customer.Status.ENABLED)
+        CustomerPortResponse savedCustomer = CustomerDocumentFactory.create("customerId", "anyName", "any@email.com", 1001, Customer.Status.ENABLED)
 
         when: "mocked customerPort is called for finding customer by id"
         FindCustomerByIdPortRequest findByIdPortRequest = FindCustomerByIdPortRequest.create(savedCustomer.getId())
@@ -65,7 +65,7 @@ class CustomerServiceImplTest extends Specification implements CustomerDocumentF
 
         and: "mocked customerPort is called for updating customer"
         UpdateCustomerPortRequest updatePortRequest = UpdateCustomerPortRequest.newInstance().withId(savedCustomer.getId()).withName(newName).withEmail(newEmail).withAge(newAge).build()
-        CustomerPortResponse updatePortResponse = createCustomerDocument(savedCustomer.getId(), "resultName", "resultEmail", 15, Customer.Status.ENABLED)
+        CustomerPortResponse updatePortResponse = CustomerDocumentFactory.create(savedCustomer.getId(), "resultName", "resultEmail", 15, Customer.Status.ENABLED)
         customerPortMock.update(updatePortRequest) >> Mono.just(updatePortResponse)
 
         and: "customerServiceImpl is called for updating customer"
@@ -90,7 +90,7 @@ class CustomerServiceImplTest extends Specification implements CustomerDocumentF
 
     def "Should throw exception when updating customer"(String newName, String newEmail, Integer newAge, Customer.Status status){
         given:
-        CustomerPortResponse savedCustomer = createCustomerDocument("customerId", "anyName", "any@email.com", 1001, status)
+        CustomerPortResponse savedCustomer = CustomerDocumentFactory.create("customerId", "anyName", "any@email.com", 1001, status)
 
         when: "mocked customerPort is called for finding customer by id"
         FindCustomerByIdPortRequest findByIdPortRequest = FindCustomerByIdPortRequest.create(savedCustomer.getId())
@@ -115,7 +115,7 @@ class CustomerServiceImplTest extends Specification implements CustomerDocumentF
 
         when: "mocked customerPort is called for updating customer"
         UpdateCustomerPortRequest updatePortRequest = UpdateCustomerPortRequest.newInstance().withId(customerId).withStatus(Customer.Status.DISABLED).build()
-        CustomerPortResponse updatePortResponse = createCustomerDocument(customerId, "anyName", "any@email.com", 1001, Customer.Status.DISABLED)
+        CustomerPortResponse updatePortResponse = CustomerDocumentFactory.create(customerId, "anyName", "any@email.com", 1001, Customer.Status.DISABLED)
         customerPortMock.update(updatePortRequest) >> Mono.just(updatePortResponse)
 
         and: "customerServiceImpl is called for disabling customer"
@@ -134,7 +134,7 @@ class CustomerServiceImplTest extends Specification implements CustomerDocumentF
 
     def "should find customer by id"(){
         given:
-        CustomerPortResponse savedCustomer = createCustomerDocument("customerId", "anyName", "any@email.com", 1001, Customer.Status.ENABLED)
+        CustomerPortResponse savedCustomer = CustomerDocumentFactory.create("customerId", "anyName", "any@email.com", 1001, Customer.Status.ENABLED)
 
         when: "mocked customerPort is called for finding customer by id"
         FindCustomerByIdPortRequest findByIdPortRequest = FindCustomerByIdPortRequest.create(savedCustomer.getId())
@@ -155,7 +155,7 @@ class CustomerServiceImplTest extends Specification implements CustomerDocumentF
 
     def "should find customers" (String name, String email, Integer ageMin, Integer ageMax){
         given:
-        CustomerPortResponse savedCustomer = createCustomerDocument("customerId", "anyName", "any@email.com", 1001, Customer.Status.ENABLED)
+        CustomerPortResponse savedCustomer = CustomerDocumentFactory.create("customerId", "anyName", "any@email.com", 1001, Customer.Status.ENABLED)
         Collection<CustomerPortResponse> savedCustomers = [savedCustomer]
 
         when: "mocked customerPort is called for finding customers"
