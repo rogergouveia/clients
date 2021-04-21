@@ -1,5 +1,8 @@
 package com.rngouveia.customer.application.port.dto.request;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Optional;
 
@@ -68,5 +71,21 @@ public class FindCustomersPortRequest {
             vo.emailRegex = emailRegex;
             return vo;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FindCustomersPortRequest that = (FindCustomersPortRequest) o;
+
+        return new EqualsBuilder().append(nameRegex, that.nameRegex).append(ageMin, that.ageMin).append(ageMax, that.ageMax).append(emailRegex, that.emailRegex).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(nameRegex).append(ageMin).append(ageMax).append(emailRegex).toHashCode();
     }
 }

@@ -16,11 +16,15 @@ import javax.validation.constraints.NotNull;
 @Validated
 public class CustomerServiceImpl implements CustomerService {
 
-    @Autowired
     private CustomerConverter converter;
-
-    @Autowired
     private CustomerPort customerPort;
+    private CustomerServiceValidator validator;
+
+    public CustomerServiceImpl(CustomerConverter converter, CustomerPort customerPort, CustomerServiceValidator validator) {
+        this.converter = converter;
+        this.customerPort = customerPort;
+        this.validator = validator;
+    }
 
     @Override
     public Mono<Customer> create(@NotNull @Valid CreateCustomerVO vo) {
@@ -34,8 +38,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Mono<Customer> update(@NotNull @Valid UpdateCustomerVO vo) {
-        return Mono
-                .just(vo)
+        Mono<Customer> validatedCustomerToUpdate = Mono.just(vo.getId()).map(FindCustomerByIdVO::create).flatMap(this::find).doOnNext(c -> validator.validate(vo, c));
+
+        return validatedCustomerToUpdate
+                .then(Mono.just(vo))
                 .map(converter::toRequest)
                 .flatMap(customerPort::update)
                 .map(converter::toDomain)
