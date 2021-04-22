@@ -26,7 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<Customer> create(@NotNull @Valid CreateCustomerVO vo) {
+    public Mono<Customer> create(@NotNull @Valid CreateCustomerServiceRequest vo) {
         return Mono
                 .just(vo)
                 .map(converter::toRequest)
@@ -36,8 +36,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<Customer> update(@NotNull @Valid UpdateCustomerVO vo) {
-        Mono<Customer> validatedCustomerToUpdate = Mono.just(vo.getId()).map(FindCustomerByIdVO::create).flatMap(this::find).doOnNext(c -> validator.validate(vo, c));
+    public Mono<Customer> update(@NotNull @Valid UpdateCustomerServiceRequest vo) {
+        Mono<Customer> validatedCustomerToUpdate = Mono.just(vo.getId()).map(FindCustomerByIdServiceRequest::create).flatMap(this::find).doOnNext(c -> validator.validate(vo, c));
 
         return validatedCustomerToUpdate
                 .then(Mono.just(vo))
@@ -48,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<Customer> disable(@NotNull @Valid DisableCustomerVO vo) {
+    public Mono<Customer> disable(@NotNull @Valid DisableCustomerServiceRequest vo) {
         return Mono
                 .just(vo)
                 .map(converter::toRequest)
@@ -58,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<Customer> find(@NotNull @Valid FindCustomerByIdVO vo) {
+    public Mono<Customer> find(@NotNull @Valid FindCustomerByIdServiceRequest vo) {
         return Mono
                 .just(vo)
                 .map(converter::toRequest)
@@ -68,7 +68,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Flux<Customer> find(@NotNull @Valid FindCustomersVO vo) {
+    public Flux<Customer> find(@NotNull @Valid FindCustomersServiceRequest vo) {
         return Mono
                 .just(vo)
                 .map(converter::toRequest)

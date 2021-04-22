@@ -10,11 +10,11 @@ import com.rngouveia.customer.application.port.dto.response.CustomerPortResponse
 import com.rngouveia.customer.application.service.CustomerConverter
 import com.rngouveia.customer.application.service.CustomerServiceImpl
 import com.rngouveia.customer.application.service.CustomerServiceValidator
-import com.rngouveia.customer.application.service.dto.CreateCustomerVO
-import com.rngouveia.customer.application.service.dto.DisableCustomerVO
-import com.rngouveia.customer.application.service.dto.FindCustomerByIdVO
-import com.rngouveia.customer.application.service.dto.FindCustomersVO
-import com.rngouveia.customer.application.service.dto.UpdateCustomerVO
+import com.rngouveia.customer.application.service.dto.CreateCustomerServiceRequest
+import com.rngouveia.customer.application.service.dto.DisableCustomerServiceRequest
+import com.rngouveia.customer.application.service.dto.FindCustomerByIdServiceRequest
+import com.rngouveia.customer.application.service.dto.FindCustomersServiceRequest
+import com.rngouveia.customer.application.service.dto.UpdateCustomerServiceRequest
 import com.rngouveia.customer.domain.Customer
 import com.rngouveia.customer.helper.factory.CustomerDocumentFactory
 import reactor.core.publisher.Flux
@@ -43,7 +43,7 @@ class CustomerServiceImplTest extends Specification {
         customerPortMock.create(portRequest) >> Mono.just(portResponse)
 
         and: "customerServiceImpl is called for creating customer"
-        CreateCustomerVO request = CreateCustomerVO.newInstance().withName(name).withAge(age).withEmail(email).build()
+        CreateCustomerServiceRequest request = CreateCustomerServiceRequest.newInstance().withName(name).withAge(age).withEmail(email).build()
         Customer response = customerService.create(request).block()
 
         then:
@@ -69,7 +69,7 @@ class CustomerServiceImplTest extends Specification {
         customerPortMock.update(updatePortRequest) >> Mono.just(updatePortResponse)
 
         and: "customerServiceImpl is called for updating customer"
-        UpdateCustomerVO request = UpdateCustomerVO.newInstance().withId(savedCustomer.getId()).withName(newName).withAge(newAge).withEmail(newEmail).build()
+        UpdateCustomerServiceRequest request = UpdateCustomerServiceRequest.newInstance().withId(savedCustomer.getId()).withName(newName).withAge(newAge).withEmail(newEmail).build()
         Customer response = customerService.update(request).block()
 
         then:
@@ -97,7 +97,7 @@ class CustomerServiceImplTest extends Specification {
         customerPortMock.find(findByIdPortRequest) >> Mono.just(savedCustomer)
 
         and: "customerServiceImpl is called for updating customer"
-        UpdateCustomerVO request = UpdateCustomerVO.newInstance().withId(savedCustomer.getId()).withName(newName).withAge(newAge).withEmail(newEmail).build()
+        UpdateCustomerServiceRequest request = UpdateCustomerServiceRequest.newInstance().withId(savedCustomer.getId()).withName(newName).withAge(newAge).withEmail(newEmail).build()
         Customer response = customerService.update(request).block()
 
         then:
@@ -119,7 +119,7 @@ class CustomerServiceImplTest extends Specification {
         customerPortMock.update(updatePortRequest) >> Mono.just(updatePortResponse)
 
         and: "customerServiceImpl is called for disabling customer"
-        DisableCustomerVO request = DisableCustomerVO.create(customerId)
+        DisableCustomerServiceRequest request = DisableCustomerServiceRequest.create(customerId)
         Customer response = customerService.disable(request).block()
 
         then:
@@ -141,7 +141,7 @@ class CustomerServiceImplTest extends Specification {
         customerPortMock.find(findByIdPortRequest) >> Mono.just(savedCustomer)
 
         and: "customerServiceImpl is called for finding customer by id"
-        FindCustomerByIdVO request = FindCustomerByIdVO.create(savedCustomer.getId())
+        FindCustomerByIdServiceRequest request = FindCustomerByIdServiceRequest.create(savedCustomer.getId())
         Customer response = customerService.find(request).block()
 
         then:
@@ -163,7 +163,7 @@ class CustomerServiceImplTest extends Specification {
         customerPortMock.find(findPortRequest) >> Flux.fromIterable(savedCustomers)
 
         and: "customerServiceImpl is called for finding customer by id"
-        FindCustomersVO request = FindCustomersVO.newInstance().withNameRegex(name).withEmailRegex(email).withAgeMin(ageMin).withAgeMax(ageMax).build()
+        FindCustomersServiceRequest request = FindCustomersServiceRequest.newInstance().withNameRegex(name).withEmailRegex(email).withAgeMin(ageMin).withAgeMax(ageMax).build()
         List<Customer> response = customerService.find(request).collectList().block()
 
         then:

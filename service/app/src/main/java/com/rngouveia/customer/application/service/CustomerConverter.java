@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerConverter {
 
-    public CreateCustomerPortRequest toRequest(CreateCustomerVO vo){
+    public CreateCustomerPortRequest toRequest(CreateCustomerServiceRequest vo){
         return CreateCustomerPortRequest.newInstance()
                 .withName(vo.getName())
                 .withAge(vo.getAge())
@@ -22,7 +22,7 @@ public class CustomerConverter {
                 ;
     }
 
-    public UpdateCustomerPortRequest toRequest(UpdateCustomerVO vo){
+    public UpdateCustomerPortRequest toRequest(UpdateCustomerServiceRequest vo){
         return UpdateCustomerPortRequest.newInstance()
                 .withId(vo.getId())
                 .withName(vo.getName().orElse(null))
@@ -33,7 +33,7 @@ public class CustomerConverter {
                 ;
     }
 
-    public UpdateCustomerPortRequest toRequest(DisableCustomerVO vo){
+    public UpdateCustomerPortRequest toRequest(DisableCustomerServiceRequest vo){
         return UpdateCustomerPortRequest.newInstance()
                 .withId(vo.getId())
                 .withStatus(Customer.Status.DISABLED)
@@ -41,7 +41,7 @@ public class CustomerConverter {
                 ;
     }
 
-    public FindCustomersPortRequest toRequest(FindCustomersVO vo){
+    public FindCustomersPortRequest toRequest(FindCustomersServiceRequest vo){
         return FindCustomersPortRequest.newInstance()
                 .withNameRegex(vo.getNameRegex().orElse(null))
                 .withAgeMin(vo.getAgeMin().orElse(null))
@@ -51,7 +51,7 @@ public class CustomerConverter {
                 ;
     }
 
-    public FindCustomerByIdPortRequest toRequest(FindCustomerByIdVO vo){
+    public FindCustomerByIdPortRequest toRequest(FindCustomerByIdServiceRequest vo){
         return FindCustomerByIdPortRequest.create(vo.getId());
     }
 

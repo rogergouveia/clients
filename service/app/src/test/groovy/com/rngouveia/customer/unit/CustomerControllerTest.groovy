@@ -7,14 +7,13 @@ import com.rngouveia.customer.api.dto.request.FindCustomersApiRequest
 import com.rngouveia.customer.api.dto.request.UpdateCustomerApiRequest
 import com.rngouveia.customer.api.dto.response.CustomerApiResponse
 import com.rngouveia.customer.application.service.CustomerService
-import com.rngouveia.customer.application.service.dto.CreateCustomerVO
-import com.rngouveia.customer.application.service.dto.DisableCustomerVO
-import com.rngouveia.customer.application.service.dto.FindCustomerByIdVO
-import com.rngouveia.customer.application.service.dto.FindCustomersVO
-import com.rngouveia.customer.application.service.dto.UpdateCustomerVO
+import com.rngouveia.customer.application.service.dto.CreateCustomerServiceRequest
+import com.rngouveia.customer.application.service.dto.DisableCustomerServiceRequest
+import com.rngouveia.customer.application.service.dto.FindCustomerByIdServiceRequest
+import com.rngouveia.customer.application.service.dto.FindCustomersServiceRequest
+import com.rngouveia.customer.application.service.dto.UpdateCustomerServiceRequest
 import com.rngouveia.customer.domain.Customer
 import com.rngouveia.customer.helper.factory.FindCustomersApiRequestFactory
-import org.springframework.web.bind.annotation.RequestBody
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import spock.lang.Specification
@@ -34,7 +33,7 @@ class CustomerControllerTest extends Specification {
         CreateCustomerApiRequest request = CreateCustomerApiRequest.newInstance().withName("anyName").withAge(99).withEmail("any@mail.com").build()
 
         when: "mocked customerService is called for creating customer"
-        CreateCustomerVO serviceRequest = CreateCustomerVO.newInstance().withName(request.getName()).withEmail(request.getEmail()).withAge(request.getAge()).build()
+        CreateCustomerServiceRequest serviceRequest = CreateCustomerServiceRequest.newInstance().withName(request.getName()).withEmail(request.getEmail()).withAge(request.getAge()).build()
         Customer serviceResponse = Customer.newInstance().withId("customerId").withName("name").withEmail("mail").withAge(12).withStatus(Customer.Status.ENABLED).build()
         customerServiceMock.create(serviceRequest) >> Mono.just(serviceResponse)
 
@@ -56,7 +55,7 @@ class CustomerControllerTest extends Specification {
         UpdateCustomerApiRequest request = UpdateCustomerApiRequest.newInstance().withName("anyName").withAge(99).withEmail("any@mail.com").build()
 
         when: "mocked customerService is called for updating customer"
-        UpdateCustomerVO serviceRequest = UpdateCustomerVO.newInstance().withId(customerId).withName(request.getName().orElse(null)).withEmail(request.getEmail().orElse(null)).withAge(request.getAge().orElse(null)).build()
+        UpdateCustomerServiceRequest serviceRequest = UpdateCustomerServiceRequest.newInstance().withId(customerId).withName(request.getName().orElse(null)).withEmail(request.getEmail().orElse(null)).withAge(request.getAge().orElse(null)).build()
         Customer serviceResponse = Customer.newInstance().withId(customerId).withName("name").withEmail("mail").withAge(12).withStatus(Customer.Status.ENABLED).build()
         customerServiceMock.update(serviceRequest) >> Mono.just(serviceResponse)
 
@@ -77,7 +76,7 @@ class CustomerControllerTest extends Specification {
         String customerId = "customerId"
 
         when: "mocked customerService is called for disabling customer"
-        DisableCustomerVO serviceRequest = DisableCustomerVO.create(customerId)
+        DisableCustomerServiceRequest serviceRequest = DisableCustomerServiceRequest.create(customerId)
         Customer serviceResponse = Customer.newInstance().withId(customerId).withName("name").withEmail("mail").withAge(12).withStatus(Customer.Status.ENABLED).build()
         customerServiceMock.disable(serviceRequest) >> Mono.just(serviceResponse)
 
@@ -98,7 +97,7 @@ class CustomerControllerTest extends Specification {
         String customerId = "customerId"
 
         when: "mocked customerService is called for find customer by id"
-        FindCustomerByIdVO serviceRequest = FindCustomerByIdVO.create(customerId)
+        FindCustomerByIdServiceRequest serviceRequest = FindCustomerByIdServiceRequest.create(customerId)
         Customer serviceResponse = Customer.newInstance().withId(customerId).withName("name").withEmail("mail").withAge(12).withStatus(Customer.Status.ENABLED).build()
         customerServiceMock.find(serviceRequest) >> Mono.just(serviceResponse)
 
@@ -119,7 +118,7 @@ class CustomerControllerTest extends Specification {
         FindCustomersApiRequest request = FindCustomersApiRequestFactory.create("anyName", "anyMail", 10, 20)
 
         when: "mocked customerService is called for find customer by id"
-        FindCustomersVO serviceRequest = FindCustomersVO.newInstance().withNameRegex(request.getNameRegex().orElse(null)).withEmailRegex(request.getEmailRegex().orElse(null)).withAgeMin(request.getAgeMin().orElse(null)).withAgeMax(request.getAgeMax().orElse(null)).build()
+        FindCustomersServiceRequest serviceRequest = FindCustomersServiceRequest.newInstance().withNameRegex(request.getNameRegex().orElse(null)).withEmailRegex(request.getEmailRegex().orElse(null)).withAgeMin(request.getAgeMin().orElse(null)).withAgeMax(request.getAgeMax().orElse(null)).build()
         Customer serviceResponse = Customer.newInstance().withId("customerId").withName("name").withEmail("mail").withAge(12).withStatus(Customer.Status.ENABLED).build()
         customerServiceMock.find(serviceRequest) >> Flux.fromIterable([serviceResponse])
 

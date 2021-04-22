@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Optional;
 
-public class FindCustomersVO {
+public class FindCustomersServiceRequest {
     private String nameRegex;
     @PositiveOrZero
     private Integer ageMin;
@@ -14,7 +14,7 @@ public class FindCustomersVO {
     private Integer ageMax;
     private String emailRegex;
 
-    private FindCustomersVO() {
+    private FindCustomersServiceRequest() {
     }
 
     public Optional<String> getNameRegex() {
@@ -63,8 +63,8 @@ public class FindCustomersVO {
             return this;
         }
 
-        public FindCustomersVO build(){
-            FindCustomersVO vo = new FindCustomersVO();
+        public FindCustomersServiceRequest build(){
+            FindCustomersServiceRequest vo = new FindCustomersServiceRequest();
             vo.nameRegex = nameRegex;
             vo.ageMin = ageMin;
             vo.ageMax = ageMax;
@@ -79,7 +79,7 @@ public class FindCustomersVO {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        FindCustomersVO that = (FindCustomersVO) o;
+        FindCustomersServiceRequest that = (FindCustomersServiceRequest) o;
 
         return new EqualsBuilder().append(nameRegex, that.nameRegex).append(ageMin, that.ageMin).append(ageMax, that.ageMax).append(emailRegex, that.emailRegex).isEquals();
     }

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
-public class CreateCustomerVO {
+public class CreateCustomerServiceRequest {
     @NotBlank
     private String name;
     @NotNull
@@ -18,7 +18,7 @@ public class CreateCustomerVO {
     @Email
     private String email;
 
-    private CreateCustomerVO(){}
+    private CreateCustomerServiceRequest(){}
 
     public String getName() {
         return name;
@@ -41,23 +41,23 @@ public class CreateCustomerVO {
         private Integer age;
         private String email;
 
-        public CreateCustomerVO.Builder withName(String name){
+        public CreateCustomerServiceRequest.Builder withName(String name){
             this.name = name;
             return this;
         }
 
-        public CreateCustomerVO.Builder withAge(Integer age){
+        public CreateCustomerServiceRequest.Builder withAge(Integer age){
             this.age = age;
             return this;
         }
 
-        public CreateCustomerVO.Builder withEmail(String email){
+        public CreateCustomerServiceRequest.Builder withEmail(String email){
             this.email = email;
             return this;
         }
 
-        public CreateCustomerVO build(){
-            CreateCustomerVO customer = new CreateCustomerVO();
+        public CreateCustomerServiceRequest build(){
+            CreateCustomerServiceRequest customer = new CreateCustomerServiceRequest();
             customer.name = name;
             customer.age = age;
             customer.email = email;
@@ -71,7 +71,7 @@ public class CreateCustomerVO {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        CreateCustomerVO that = (CreateCustomerVO) o;
+        CreateCustomerServiceRequest that = (CreateCustomerServiceRequest) o;
 
         return new EqualsBuilder().append(name, that.name).append(age, that.age).append(email, that.email).isEquals();
     }

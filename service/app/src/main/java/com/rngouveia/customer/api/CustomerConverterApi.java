@@ -4,9 +4,9 @@ import com.rngouveia.customer.api.dto.response.CustomerApiResponse;
 import com.rngouveia.customer.api.dto.request.CreateCustomerApiRequest;
 import com.rngouveia.customer.api.dto.request.FindCustomersApiRequest;
 import com.rngouveia.customer.api.dto.request.UpdateCustomerApiRequest;
-import com.rngouveia.customer.application.service.dto.FindCustomersVO;
-import com.rngouveia.customer.application.service.dto.CreateCustomerVO;
-import com.rngouveia.customer.application.service.dto.UpdateCustomerVO;
+import com.rngouveia.customer.application.service.dto.FindCustomersServiceRequest;
+import com.rngouveia.customer.application.service.dto.CreateCustomerServiceRequest;
+import com.rngouveia.customer.application.service.dto.UpdateCustomerServiceRequest;
 import com.rngouveia.customer.domain.Customer;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +23,8 @@ public class CustomerConverterApi {
                 ;
     }
 
-    public FindCustomersVO toVO(FindCustomersApiRequest criteria){
-        return FindCustomersVO.newInstance()
+    public FindCustomersServiceRequest toVO(FindCustomersApiRequest criteria){
+        return FindCustomersServiceRequest.newInstance()
                 .withNameRegex(criteria.getNameRegex().orElse(null))
                 .withAgeMin(criteria.getAgeMin().orElse(null))
                 .withAgeMax(criteria.getAgeMax().orElse(null))
@@ -33,8 +33,8 @@ public class CustomerConverterApi {
                 ;
     }
 
-    public UpdateCustomerVO toVO(String id, UpdateCustomerApiRequest request){
-        return UpdateCustomerVO.newInstance()
+    public UpdateCustomerServiceRequest toVO(String id, UpdateCustomerApiRequest request){
+        return UpdateCustomerServiceRequest.newInstance()
                 .withId(id)
                 .withName(request.getName().orElse(null))
                 .withEmail(request.getEmail().orElse(null))
@@ -43,8 +43,8 @@ public class CustomerConverterApi {
                 ;
     }
 
-    public CreateCustomerVO toVO(CreateCustomerApiRequest request){
-        return CreateCustomerVO.newInstance()
+    public CreateCustomerServiceRequest toVO(CreateCustomerApiRequest request){
+        return CreateCustomerServiceRequest.newInstance()
                 .withName(request.getName())
                 .withAge(request.getAge())
                 .withEmail(request.getEmail())

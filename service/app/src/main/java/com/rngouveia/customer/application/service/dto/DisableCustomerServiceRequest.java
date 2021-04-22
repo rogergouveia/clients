@@ -3,13 +3,10 @@ package com.rngouveia.customer.application.service.dto;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.validation.constraints.NotBlank;
+public class DisableCustomerServiceRequest {
+    private final String id;
 
-public class FindCustomerByIdVO {
-    @NotBlank
-    private String id;
-
-    private FindCustomerByIdVO(String id) {
+    private DisableCustomerServiceRequest(String id) {
         this.id = id;
     }
 
@@ -17,8 +14,8 @@ public class FindCustomerByIdVO {
         return id;
     }
 
-    public static FindCustomerByIdVO create(String id){
-        return new FindCustomerByIdVO(id);
+    public static DisableCustomerServiceRequest create(String id){
+        return new DisableCustomerServiceRequest(id);
     }
 
     @Override
@@ -27,7 +24,7 @@ public class FindCustomerByIdVO {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        FindCustomerByIdVO that = (FindCustomerByIdVO) o;
+        DisableCustomerServiceRequest that = (DisableCustomerServiceRequest) o;
 
         return new EqualsBuilder().append(id, that.id).isEquals();
     }

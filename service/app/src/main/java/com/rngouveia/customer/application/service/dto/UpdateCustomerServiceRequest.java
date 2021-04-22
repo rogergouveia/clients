@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Optional;
 
-public class UpdateCustomerVO {
+public class UpdateCustomerServiceRequest {
     @NotBlank
     private String id;
     private String name;
@@ -19,7 +19,7 @@ public class UpdateCustomerVO {
     @Email
     private String email;
 
-    private UpdateCustomerVO(){}
+    private UpdateCustomerServiceRequest(){}
 
     public String getId() {
         return id;
@@ -47,28 +47,28 @@ public class UpdateCustomerVO {
         private Integer age;
         private String email;
 
-        public UpdateCustomerVO.Builder withId(String id){
+        public UpdateCustomerServiceRequest.Builder withId(String id){
             this.id = id;
             return this;
         }
 
-        public UpdateCustomerVO.Builder withName(String name){
+        public UpdateCustomerServiceRequest.Builder withName(String name){
             this.name = name;
             return this;
         }
 
-        public UpdateCustomerVO.Builder withAge(Integer age){
+        public UpdateCustomerServiceRequest.Builder withAge(Integer age){
             this.age = age;
             return this;
         }
 
-        public UpdateCustomerVO.Builder withEmail(String email){
+        public UpdateCustomerServiceRequest.Builder withEmail(String email){
             this.email = email;
             return this;
         }
 
-        public UpdateCustomerVO build(){
-            UpdateCustomerVO customer = new UpdateCustomerVO();
+        public UpdateCustomerServiceRequest build(){
+            UpdateCustomerServiceRequest customer = new UpdateCustomerServiceRequest();
             customer.id = id;
             customer.name = name;
             customer.age = age;
@@ -83,7 +83,7 @@ public class UpdateCustomerVO {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        UpdateCustomerVO that = (UpdateCustomerVO) o;
+        UpdateCustomerServiceRequest that = (UpdateCustomerServiceRequest) o;
 
         return new EqualsBuilder().append(id, that.id).append(name, that.name).append(age, that.age).append(email, that.email).isEquals();
     }

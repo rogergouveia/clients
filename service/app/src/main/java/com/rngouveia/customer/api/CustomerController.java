@@ -5,9 +5,9 @@ import com.rngouveia.customer.api.dto.request.FindCustomersApiRequest;
 import com.rngouveia.customer.api.dto.request.UpdateCustomerApiRequest;
 import com.rngouveia.customer.api.dto.response.CustomerApiResponse;
 import com.rngouveia.customer.application.service.CustomerService;
-import com.rngouveia.customer.application.service.dto.DisableCustomerVO;
-import com.rngouveia.customer.application.service.dto.FindCustomerByIdVO;
-import com.rngouveia.customer.application.service.dto.UpdateCustomerVO;
+import com.rngouveia.customer.application.service.dto.DisableCustomerServiceRequest;
+import com.rngouveia.customer.application.service.dto.FindCustomerByIdServiceRequest;
+import com.rngouveia.customer.application.service.dto.UpdateCustomerServiceRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +43,7 @@ public class CustomerController {
     public Mono<CustomerApiResponse> findById(@PathVariable String id){
         return Mono
                 .just(id)
-                .map(FindCustomerByIdVO::create)
+                .map(FindCustomerByIdServiceRequest::create)
                 .flatMap(service::find)
                 .map(converter::toApiDto)
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)))
@@ -64,7 +64,7 @@ public class CustomerController {
     @PatchMapping(path = "/{id}")
     public Mono<CustomerApiResponse> update(@PathVariable String id,
                                             @RequestBody UpdateCustomerApiRequest request){
-        UpdateCustomerVO vo = converter.toVO(id, request);
+        UpdateCustomerServiceRequest vo = converter.toVO(id, request);
         return Mono
                 .just(vo)
                 .flatMap(service::update)
@@ -77,7 +77,7 @@ public class CustomerController {
     public Mono<CustomerApiResponse> disable(@PathVariable String id){
         return Mono
                 .just(id)
-                .map(DisableCustomerVO::create)
+                .map(DisableCustomerServiceRequest::create)
                 .flatMap(service::disable)
                 .map(converter::toApiDto)
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)))

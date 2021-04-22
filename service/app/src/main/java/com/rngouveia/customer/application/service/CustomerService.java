@@ -9,9 +9,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 public interface CustomerService {
-    Mono<Customer> create(@NotNull @Valid CreateCustomerVO vo);
-    Mono<Customer> update(@NotNull @Valid UpdateCustomerVO vo);
-    Mono<Customer> disable(@NotNull @Valid DisableCustomerVO vo);
-    Mono<Customer> find(@NotNull @Valid FindCustomerByIdVO vo);
-    Flux<Customer> find(@NotNull @Valid FindCustomersVO vo);
+    Mono<Customer> create(@NotNull @Valid CreateCustomerServiceRequest vo);
+    Mono<Customer> update(@NotNull @Valid UpdateCustomerServiceRequest vo);
+    Mono<Customer> disable(@NotNull @Valid DisableCustomerServiceRequest vo);
+    Mono<Customer> find(@NotNull @Valid FindCustomerByIdServiceRequest vo);
+    Flux<Customer> find(@NotNull @Valid FindCustomersServiceRequest vo);
 }
