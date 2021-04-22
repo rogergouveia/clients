@@ -1,12 +1,11 @@
 
 # Serviço de Cadastro de Clientes
 
-Aplicação de cadastro de clientes desenvolvida em Springboot, com armazenamento em um banco de dados Mongo.
+Aplicação de cadastro de clientes desenvolvida em Springboot usando-se Webflux, com armazenamento em um banco de dados Mongo.
 
 ### Design
 
-Foi construído utilizando-se um design de Ports and Adapters como arquitetura interna. Como arquitetura externa, ele foi construído com a idéia de ser um Microsserviço responsável pelo domínio de cadastro de clientes. 
-Sendo assim, ele não possue autenticação. Isso poderia ficar a cargo de um BFF. Idealmente, ele deveria disparar eventos sempre que houvesse mudança em seus objetos de domínio, mas como o ambiente fictício em que esse microsserviço seria implantado é nebuloso, optei por não fazê-lo nesse MVP.
+Foi construído utilizando-se um design de Ports and Adapters como arquitetura interna. Como arquitetura externa, ele foi construído com a idéia de ser um Microsserviço responsável pelo domínio de cadastro de clientes. Sendo assim, ele não possue autenticação. Isso poderia ficar a cargo de um BFF. Idealmente, ele deveria disparar eventos sempre que houvesse mudança em seus objetos de domínio, mas como o ambiente fictício em que esse microsserviço seria implantado é nebuloso, optei por não fazê-lo nesse MVP.
 Optou-se por não haver delete, pois a deleção física de um cliente parece problemático, e o approach de expor como DELETE na api Rest uma deleção que na verdade é lógica leva os usuários à uma interpretação errada da funcionalidade.
 Por se tratar de um MVP, optei por não desenvolver paginação.
 
