@@ -3,7 +3,6 @@ package com.rngouveia.customer.application.service;
 import com.rngouveia.customer.application.port.CustomerPort;
 import com.rngouveia.customer.application.service.dto.*;
 import com.rngouveia.customer.domain.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Flux;

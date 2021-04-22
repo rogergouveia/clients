@@ -15,20 +15,20 @@ Por se tratar de um MVP, optei por não desenvolver paginação.
 A aplicação em si está dentro da pasta `/service`.
 A imagem docker da aplicação foi construída usando-se um plugin do gradle (o comando `./gradlew build docker`), o que irá criar a imagem `rabbithole/customers:1.0.0-SNAPSHOT`.
 Eu estou hospedando essa imagem no Docker Hub como `rngouveia/consumers:latest`.
-Há um arquivo `docker-compose.yml` na raíz do projeto que executa o container da aplicação, um container mongo e um container do mongo-express (apenas pra olhar os dados do bd diretamente).
-Na instância ec2 da AWS há apenas esse arquivo `docker-compose.yml`. O comando `docker-compose up` baixa todas as dependencias do Docker Hub e as executa.
+Para rodar a aplicação, basta executar o comando `docker-compose up` na pasta `customers` em um ambiente com docker. Isso irá baixar todas as dependências necessárias do Docker Hub e executá-las. 
+Na instância ec2 da AWS há apenas o arquivo `docker-compose.yml` da raiz do projeto.
 
 ### Qualidade
 
 Foram desenvolvidos testes unitários da camada de api e de negócio, assim como testes de integração para a camada de infraestrutura e de ciclo de vida do objeto de domínio.
-Foi usado o Jacoco para verificar cobertura de código. A aplicação possui 100% de cobertura.
+Foi usado o Jacoco para verificar cobertura de código. A aplicação possui 100% de cobertura. 
+Foi utilizado um servidor Sonarqube dockerizado local para analisar a qualidade do código. Ele está com 'A' em todos os quesitos. 
 
 
 ### Observações
 1. Os dados do Mongo dockerizado não estão realmente persistentes. Seria preciso registrar um volume externo ao container no docker-compose para que os dados não fossem perdidos quando o container é parado.
-2. Eu ia rodar um servidor do sonar a partir de um docker para validar a qualidade do código, mas não tive tempo.
-3. Idealmente se utilizaria algum sistema de versionamento dos dados (Flyway por exemplo), mas não tive tempo de fazê-lo. 
-4. O processo de "build" e "implantação" está bastante manual e laboroso. Idealmente se utilizariam ferramentas de automação como Ansible ou Terraform, assim como o Jenkins para isso.
-5. Idealmente em um ambiente de produção, deveria haver ferramentes que integram os logs.
-6. Idealmente em um ambiente de produção, a aplicação em si deveria disparar métricas, e deveriam haver ferramentas de coleta delas. No momento, há apenas as métricas do container da aws.
+2. Idealmente se utilizaria algum sistema de versionamento dos dados (Flyway por exemplo), mas não tive tempo de fazê-lo. 
+3. O processo de "build" e "implantação" está bastante manual e laboroso. Idealmente se utilizariam ferramentas de automação como Ansible ou Terraform, assim como o Jenkins para isso.
+4. Idealmente em um ambiente de produção, deveria haver ferramentes que integram os logs.
+5. Idealmente em um ambiente de produção, a aplicação em si deveria disparar métricas, e deveriam haver ferramentas de coleta delas. No momento, há apenas as métricas do container da aws.
 

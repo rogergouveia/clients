@@ -5,3 +5,5 @@
 build
 
 service/app/out
+
+**/.idea

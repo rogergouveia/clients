@@ -7,7 +7,6 @@ import com.rngouveia.customer.application.port.dto.request.UpdateCustomerPortReq
 import com.rngouveia.customer.application.port.dto.response.CustomerPortResponse;
 import com.rngouveia.customer.application.service.dto.*;
 import com.rngouveia.customer.domain.Customer;
-import com.rngouveia.customer.infrastructure.CustomerDocument;
 import org.springframework.stereotype.Component;
 
 @Component

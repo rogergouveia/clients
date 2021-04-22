@@ -35,6 +35,16 @@ docker {
     buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
 
+sonarqube {
+    properties {
+        property "sonar.cpd.exclusions","**/dto/**, **/*Document.java, **/domain/**"
+        property "sonar.exclusions", "**/*Application.java, **/configuration/**, **/error/**, **/util/**, **/generated/**, **/dto/**"
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.login", "6df2738d776fc1b947686542f2df268d83598808"
+        property "sonar.projectKey", "customers"
+    }
+}
+
 jacoco {
     toolVersion = "0.8.2"
 }

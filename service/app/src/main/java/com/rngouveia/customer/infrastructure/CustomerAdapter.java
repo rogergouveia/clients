@@ -1,6 +1,5 @@
 package com.rngouveia.customer.infrastructure;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rngouveia.customer.application.port.CustomerPort;
 import com.rngouveia.customer.application.port.dto.request.CreateCustomerPortRequest;
